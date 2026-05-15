@@ -4,24 +4,11 @@ import {
   getFilterEpisodes,
   getListEpisodes,
 } from "./controllers/podcasts_controller";
+import { Routes } from "./routes/routes";
+import { HttpMethod } from "./utils/http-methods";
+import { app } from "./app";
 
-const server = http.createServer(
-  async (request: http.IncomingMessage, response: http.ServerResponse) => {
-    //queryString
-    //http://localhost:3333/api/episode?p=flow
-    const [baseUrl, queryString] = request.url?.split("?") ?? ["", ""];
-
-    //listar podcasts
-    if (request.method === "GET" && baseUrl === "/api/list") {
-      await getListEpisodes(request, response);
-    }
-
-    //filtrar episodios
-    if (request.method === "GET" && baseUrl === "/api/episode") {
-      await getFilterEpisodes(request, response);
-    }
-  },
-);
+const server = http.createServer(app);
 
 const port = process.env.PORT;
 

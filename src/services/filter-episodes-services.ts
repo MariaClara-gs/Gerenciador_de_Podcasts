@@ -1,7 +1,12 @@
+import { IncomingMessage } from "http";
 import { repositoryPodcast } from "../repositories/podcasts-repository";
 
-export const serviceFilterEpisodes = async (podcastName: String) => {
-  const data = await repositoryPodcast(podcastName);
+export const serviceFilterEpisodes = async (
+  podcastName: string | undefined,
+) => {
+  const queryString = podcastName?.split("?p=")[1] || ""; //vai pegar o "flow" que esta na posicao 1
+
+  const data = await repositoryPodcast(queryString);
 
   return data;
 };
